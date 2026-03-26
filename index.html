@@ -9,40 +9,52 @@
 <style>
 :root {
   --white: #ffffff;
-  --bg: #fbfbfd;
-  --gray-100: #f5f5f7;
-  --gray-200: #e8e8ed;
-  --gray-400: #a1a1a6;
-  --gray-500: #86868b;
-  --gray-600: #6e6e73;
-  --gray-900: #1d1d1f;
-  --blue: #0071e3;
+  --text-primary: rgba(255,255,255,0.92);
+  --text-secondary: rgba(255,255,255,0.50);
+  --text-muted: rgba(240, 241, 245, 0.753);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(71, 123, 206, 0.35);
+  --card-bg: rgba(99, 118, 175, 0.65);
+  --nav-bg: rgba(160, 162, 168, 0.8);
   --green: #34c759;
-  --green-bg: #eafbef;
-  --green-text: #1a7f37;
+  --green-bg: rgba(52,199,89,0.12);
+  --green-text: #8fe7b0;
   --amber: #ff9f0a;
-  --amber-bg: #fff8eb;
-  --amber-text: #92600a;
-  --brand: #183baa;
-  --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.06);
+  --amber-bg: rgba(255,159,10,0.12);
+  --amber-text: #ffc55c;
+  --blue: #a9a9cf;
+  --brand: #4a7fff;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--gray-900);
+  color: var(--text-primary);
   min-height: 100vh;
+  background: #808080;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
+
+/* ── CANVAS BACKGROUND ── */
+#bg-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── ALL CONTENT ABOVE CANVAS ── */
+.nav, header, .stats, main, footer { position: relative; z-index: 1; }
 
 /* ── NAV ── */
 .nav {
-  background: rgba(251,251,253,0.82);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--gray-200);
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border-bottom: 1px solid var(--border);
   height: 56px;
   padding: 0 max(28px, env(safe-area-inset-left));
   display: flex;
@@ -58,20 +70,19 @@ body {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: var(--gray-900);
 }
 
 .nav-divider {
   width: 1px;
   height: 18px;
-  background: var(--gray-200);
+  background: var(--border);
 }
 
 .nav-product {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .nav-right {
@@ -79,13 +90,12 @@ body {
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  color: var(--gray-500);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
 .nav-dot {
-  width: 7px;
-  height: 7px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 0 2px rgba(52,199,89,0.2);
@@ -93,14 +103,14 @@ body {
 }
 
 @keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(52,199,89,0.2); }
-  50% { box-shadow: 0 0 0 5px rgba(52,199,89,0.07); }
+  0%,100% { box-shadow: 0 0 0 2px rgba(52,199,89,0.2); }
+  50%      { box-shadow: 0 0 0 6px rgba(52,199,89,0.06); }
 }
 
 /* ── HERO ── */
 .hero {
   text-align: center;
-  padding: 80px 24px 20px;
+  padding: 90px 24px 20px;
   max-width: 780px;
   margin: 0 auto;
 }
@@ -109,34 +119,34 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--gray-100);
-  border: 1px solid var(--gray-200);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
   border-radius: 100px;
   padding: 5px 14px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--gray-600);
-  margin-bottom: 24px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
 }
 
 .hero-badge-dot {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--blue);
+  box-shadow: 0 0 6px var(--blue);
 }
 
 .hero h1 {
-  font-size: clamp(40px, 7vw, 64px);
+  font-size: clamp(42px, 7vw, 68px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.05;
-  color: var(--gray-900);
-  margin-bottom: 16px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
 }
 
 .hero h1 span {
-  background: linear-gradient(135deg, #183baa, #4a6fe8);
+  background: linear-gradient(135deg, #5daaff, #a78bff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -144,10 +154,10 @@ body {
 
 .hero p {
   font-size: 18px;
-  line-height: 1.6;
-  color: var(--gray-500);
+  line-height: 1.65;
+  color: var(--text-secondary);
   font-weight: 400;
-  max-width: 520px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -156,7 +166,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 48px;
-  padding: 40px 24px 0;
+  padding: 44px 24px 0;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -166,76 +176,64 @@ body {
 .stat-value {
   font-size: 32px;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--text-primary);
   letter-spacing: -0.03em;
   line-height: 1;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  color: var(--gray-500);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
 }
 
 /* ── SECTION ── */
 .section {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 60px 24px 80px;
+  padding: 64px 24px 90px;
 }
 
 .section-title {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--gray-400);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   margin-bottom: 24px;
 }
 
 /* ── GRID ── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
 }
 
 /* ── CARD ── */
 .card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 28px;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.25,0.1,0.25,1), box-shadow 0.3s ease;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  background: linear-gradient(135deg, rgba(24,59,170,0.025), transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .card:hover {
-  border-color: rgba(24,59,170,0.18);
-  box-shadow: var(--card-shadow-hover);
-  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,80,255,0.12), 0 0 1px rgba(100,160,255,0.2);
 }
-
-.card:hover::before { opacity: 1; }
 
 .card-header {
   display: flex;
@@ -245,13 +243,13 @@ body {
 }
 
 .app-icon {
-  width: 52px;
-  height: 52px;
+  width: 52px; height: 52px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 1px solid var(--border);
 }
 
 .app-icon svg { width: 24px; height: 24px; }
@@ -268,33 +266,32 @@ body {
 
 .badge::before {
   content: '';
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
 }
 
 .badge.live { background: var(--green-bg); color: var(--green-text); }
-.badge.live::before { background: var(--green); }
-.badge.wip { background: var(--amber-bg); color: var(--amber-text); }
-.badge.wip::before { background: var(--amber); animation: pulse-amber 2s infinite; }
+.badge.live::before { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.badge.wip  { background: var(--amber-bg);  color: var(--amber-text); }
+.badge.wip::before  { background: var(--amber); animation: pulse-amber 2s infinite; }
 
 @keyframes pulse-amber {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,100% { opacity:1; }
+  50%      { opacity:0.3; }
 }
 
 .card h3 {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--text-primary);
   letter-spacing: -0.02em;
   margin-bottom: 8px;
   line-height: 1.3;
 }
 
 .card p {
-  font-size: 14px;
-  color: var(--gray-500);
+  font-size: 13.5px;
+  color: var(--text-secondary);
   line-height: 1.65;
   flex: 1;
   margin-bottom: 20px;
@@ -306,13 +303,13 @@ body {
   align-items: center;
   justify-content: space-between;
   padding-top: 16px;
-  border-top: 1px solid var(--gray-100);
+  border-top: 1px solid var(--border);
 }
 
 .port-tag {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
-  color: var(--gray-400);
+  color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -329,16 +326,15 @@ body {
 .card:hover .open-link { gap: 8px; }
 
 .open-link svg {
-  width: 13px;
-  height: 13px;
+  width: 13px; height: 13px;
   transition: transform 0.2s ease;
 }
 
-.card:hover .open-link svg { transform: translate(2px, -2px); }
+.card:hover .open-link svg { transform: translate(2px,-2px); }
 
 /* ── FOOTER ── */
 .footer {
-  border-top: 1px solid var(--gray-200);
+  border-top: 1px solid var(--border);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
@@ -346,54 +342,52 @@ body {
   gap: 12px;
 }
 
-.footer-logo { opacity: 0.55; }
+.footer-logo { opacity: 0.30; filter: brightness(0) invert(1); }
 
-.footer-text {
-  font-size: 12px;
-  color: var(--gray-400);
-}
-
-.footer-sep { color: var(--gray-200); }
+.footer-text { font-size: 12px; color: var(--text-muted); }
+.footer-sep  { color: var(--border); }
 
 /* ── ANIMATIONS ── */
 .fade-up {
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.6s ease forwards;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s ease forwards;
 }
 
 @keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity:1; transform:translateY(0); }
 }
 
-.card:nth-child(1) { animation-delay: 0.08s; }
-.card:nth-child(2) { animation-delay: 0.14s; }
-.card:nth-child(3) { animation-delay: 0.20s; }
-.card:nth-child(4) { animation-delay: 0.26s; }
+.card:nth-child(1) { animation-delay: 0.10s; }
+.card:nth-child(2) { animation-delay: 0.17s; }
+.card:nth-child(3) { animation-delay: 0.24s; }
+.card:nth-child(4) { animation-delay: 0.31s; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 720px) {
-  .hero { padding: 52px 20px 20px; }
+  .hero { padding: 60px 20px 20px; }
   .hero p { font-size: 16px; }
   .stats { gap: 28px; }
   .stat-value { font-size: 26px; }
-  .section { padding: 40px 16px 60px; }
+  .section { padding: 44px 16px 64px; }
   .grid { grid-template-columns: 1fr; }
-  .card { padding: 24px; }
+  .card { padding: 22px; }
   .nav { padding: 0 16px; }
 }
 </style>
 </head>
 <body>
 
+<!-- FIBER OPTIC BACKGROUND CANVAS -->
+<canvas id="bg-canvas"></canvas>
+
 <!-- NAV -->
 <nav class="nav">
   <a class="nav-logo" href="#">
-    <!-- Isotype -->
-    <svg height="28" viewBox="0 0 729 606" xmlns="http://www.w3.org/2000/svg">
-      <path fill="#183baa" d="M305.15,397.75c-12.55,5.43-26.4,8.45-40.95,8.45-57,0-103.2-46.2-103.2-103.2,0-14.55,3.01-28.39,8.45-40.95l87.27,87.27,29.04,29.04,19.39,19.39Z"/>
-      <path fill="#183baa" d="M336.05,228.92l169.1,169.1c-12.39,5.27-26.03,8.19-40.35,8.19-27.26,0-52.05-10.57-70.5-27.84-.44-.4-.87-.82-1.3-1.23l-169.14-169.14c12.39-5.27,26.03-8.19,40.35-8.19h.11c.19,0,.38,0,.56,0,24.04.15,46.14,8.53,63.61,22.46,2.63,2.1,5.16,4.32,7.57,6.66"/>
-      <path fill="#183baa" d="M568,303c0,14.55-3.01,28.39-8.45,40.95l-135.7-135.71c12.55-5.43,26.4-8.44,40.95-8.44,57,0,103.2,46.2,103.2,103.2"/>
+    <svg height="64" viewBox="0 0 729 606" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#4a7fff" d="M305.15,397.75c-12.55,5.43-26.4,8.45-40.95,8.45-57,0-103.2-46.2-103.2-103.2,0-14.55,3.01-28.39,8.45-40.95l87.27,87.27,29.04,29.04,19.39,19.39Z"/>
+      <path fill="#4a7fff" d="M336.05,228.92l169.1,169.1c-12.39,5.27-26.03,8.19-40.35,8.19-27.26,0-52.05-10.57-70.5-27.84-.44-.4-.87-.82-1.3-1.23l-169.14-169.14c12.39-5.27,26.03-8.19,40.35-8.19h.11c.19,0,.38,0,.56,0,24.04.15,46.14,8.53,63.61,22.46,2.63,2.1,5.16,4.32,7.57,6.66"/>
+      <path fill="#4a7fff" d="M568,303c0,14.55-3.01,28.39-8.45,40.95l-135.7-135.71c12.55-5.43,26.4-8.44,40.95-8.44,57,0,103.2,46.2,103.2,103.2"/>
     </svg>
     <div class="nav-divider"></div>
     <span class="nav-product">Infratools</span>
@@ -415,7 +409,7 @@ body {
 </header>
 
 <!-- STATS -->
-<div class="stats fade-up" style="animation-delay:0.1s">
+<div class="stats fade-up" style="animation-delay:0.12s">
   <div class="stat">
     <div class="stat-value" id="count-live">4</div>
     <div class="stat-label">Apps activas</div>
@@ -442,10 +436,10 @@ body {
     <!-- Overlap Networks -->
     <a class="card fade-up" href="https://overlap.flonetworks.app" target="_blank">
       <div class="card-header">
-        <div class="app-icon" style="background:#eef1fb">
+        <div class="app-icon" style="background:rgba(74,127,255,0.10)">
           <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="8" stroke="#183baa" stroke-width="1.6"/>
-            <path d="M4 12h16M12 4c-2.8 3.6-2.8 12 0 16M12 4c2.8 3.6 2.8 12 0 16" stroke="#183baa" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="8" stroke="#5daaff" stroke-width="1.6"/>
+            <path d="M4 12h16M12 4c-2.8 3.6-2.8 12 0 16M12 4c2.8 3.6 2.8 12 0 16" stroke="#5daaff" stroke-width="1.6"/>
           </svg>
         </div>
         <span class="badge live">En línea</span>
@@ -458,99 +452,103 @@ body {
       </div>
     </a>
 
-
     <!-- Distancia a Redes -->
-    <a class="card fade-up" href="https://distancia-a-redes.flonetworks.app/" target="_blank">
-      <div class="card-header">
-        <div class="app-icon" style="background:#eef1fb">
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="5" cy="12" r="2.5" fill="#183baa"/>
-            <circle cx="19" cy="12" r="2.5" stroke="#183baa" stroke-width="1.6"/>
-            <path d="M7.5 12h9" stroke="#183baa" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2.5 2"/>
-          </svg>
-        </div>
-        <span class="badge live">En línea</span>
+<a class="card fade-up" href="https://distancia-a-redes.flonetworks.app/" target="_blank">
+    <div class="card-header">
+      <div class="app-icon" style="background:rgba(74,127,255,0.10)">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="8" stroke="#5daaff" stroke-width="1.6"/>
+        </svg>
       </div>
-      <h3>Distancia a Redes</h3>
-      <p>Análisis de las redes de fibra hacia ubicaciones, medición de distancia en metros y exportación KMZ/CSV.</p>
-      <div class="card-footer">
-        <span class="port-tag">Puerto :9602</span>
-        <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </a>
-
-    <a class="card fade-up" href="https://csv-to-kmz.flonetworks.app" target="_blank">
-  <div class="card-header">
-    <div class="app-icon" style="background: #e8f0fe;">
-      <!-- Aquí va el ícono SVG -->
+      <span class="badge live">En línea</span>
     </div>
-    <span class="badge live">En línea</span>
-  </div>
-  <h3>CSV to KMZ</h3>
-  <p>Conversión de Archivo CSV a KMZ. Opcion de organizar por folders. Selección de iconos, colores, descripciones, tamaños </p>
-  <div class="card-footer">
-    <span class="port-tag">Puerto :9603</span>
-    <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-  </div>
-</a>
-
-    <a class="card fade-up" href="https://kmz-to-mapinfo.flonetworks.app/" target="_blank">
-  <div class="card-header">
-    <div class="app-icon" style="background: #e8f0fe;">
-      <!-- Aquí va el ícono SVG -->
+    <h3>Distancia a Redes</h3>
+    <p>Análisis de las redes de fibra hacia ubicaciones, medición de distancia en metros y exportación KMZ/CSV.</p>
+    <div class="card-footer">
+      <span class="port-tag">Puerto :9602</span>
+      <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
-    <span class="badge live">En línea</span>
-  </div>
-  <h3>KMZ to MapInfo</h3>
-  <p>Convierte kmz a archivos de importacion a Connect Master que usa MapInfo. .dat, .map, .tab, .id</p>
-  <div class="card-footer">
-    <span class="port-tag">Puerto :0000</span>
-    <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-  </div>
-</a>
-
-
+  </a>
 
     <!-- Interface Analyzer -->
     <a class="card fade-up" href="http://10.240.0.53:8600" target="_blank">
       <div class="card-header">
-        <div class="app-icon" style="background:#fff8eb">
+        <div class="app-icon" style="background:rgba(52,199,89,0.10)">
           <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="#ff9f0a" stroke-width="1.6"/>
-            <path d="M12 7.5v5M12 16v.5" stroke="#ff9f0a" stroke-width="1.8" stroke-linecap="round"/>
+            <polyline points="3,16 7,10 11,13 15,7 21,10" stroke="#34c759" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="3" y1="19" x2="21" y2="19" stroke="#34c759" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </div>
         <span class="badge live">En línea</span>
       </div>
-      <<h3>Interface Analyzer</h3>
+      <h3>Interface Analyzer</h3>
       <p>Análisis de tráfico de interfaces de red. Monitoreo y estadísticas de rendimiento en tiempo real.</p>
       <div class="card-footer">
-        <span class="port-tag">Puerto :8600</span>
+        <span class="port-tag">Puerto :8505</span>
         <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
     </a>
+
+    <!-- CSV to KMZ -->
+    <a class="card fade-up" href="https://csv-to-kmz.flonetworks.app" target="_blank">
+      <div class="card-header">
+        <div class="app-icon" style="background:rgba(0,255,255,0.08)">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="5" cy="12" r="2.5" fill="#00ccff"/>
+            <circle cx="19" cy="12" r="2.5" stroke="#00ccff" stroke-width="1.6"/>
+            <path d="M7.5 12h9" stroke="#00ccff" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2.5 2"/>
+          </svg>
+        </div>
+        <span class="badge live">En línea</span>
+      </div>
+      <h3>CSV to KMZ</h3>
+      <p>Conversión de Archivo CSV a KMZ. Opcion de organizar por folders. Selección de iconos, colores, descripciones, tamaños</p>
+      <div class="card-footer">
+        <span class="port-tag">Puerto :9603</span>
+        <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </a>
+
+    <!-- KMZ to MapInfo -->
+<a class="card fade-up" href="https://kmz-to-mapinfo.flonetworks.app" target="_blank">
+    <div class="card-header">
+      <div class="app-icon" style="background:rgba(74,127,255,0.10)">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="8" stroke="#5daaff" stroke-width="1.6"/>
+        </svg>
+      </div>
+      <span class="badge live">En línea</span>
+    </div>
+    <h3>KMZ to MapInfo</h3>
+    <p>Convierte kmz a archivos de importación a Connect Master que usa MapInfo. (.dat, .map, .tab, .id).</p>
+    <div class="card-footer">
+      <span class="port-tag">Puerto :9604</span>
+      <span class="open-link">Abrir <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 10.5l8-8M10.5 2.5H6M10.5 2.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+  
+    
 
   </div>
 </main>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <!-- Full Logo -->
-  <svg class="footer-logo" height="20" viewBox="0 0 1024 606" xmlns="http://www.w3.org/2000/svg">
-    <polygon fill="#213aa5" points="206.23 373.54 206.23 432.52 195.03 432.52 165.04 396.03 164.95 396.03 164.95 432.52 151.95 432.52 151.95 373.54 163.06 373.54 193.13 410.12 193.22 410.12 193.22 373.54 206.23 373.54"/>
-    <polygon fill="#213aa5" points="283.04 407.32 261.27 407.32 261.27 421.41 299.56 421.41 299.56 432.52 248.35 432.52 248.35 373.54 297.49 373.54 297.49 384.74 261.27 384.74 261.27 396.21 283.04 396.21 283.04 407.32"/>
-    <polygon fill="#213aa5" points="329.14 373.54 384.78 373.54 384.78 384.74 363.46 384.74 363.46 432.52 350.55 432.52 350.55 384.74 329.14 384.74 329.14 373.54"/>
-    <polygon fill="#213aa5" points="427.36 373.54 438.65 412.29 439.19 412.29 451.29 373.54 460.78 373.54 472.79 412.29 473.33 412.29 484.71 373.54 498.26 373.54 479.38 432.52 467.1 432.52 455.99 397.48 455.45 397.48 444.43 432.52 432.15 432.52 413.27 373.54 427.36 373.54"/>
-    <path fill="#213aa5" d="M561.24,371.73c18.69,0,33.69,14,33.69,31.16s-14.99,31.43-33.69,31.43-33.33-13.91-33.33-31.43,14.63-31.16,33.33-31.16M561.24,423.22c11.29,0,20.14-9.21,20.14-20.32s-8.85-19.96-20.14-19.96-19.78,9.03-19.78,19.96,8.67,20.32,19.78,20.32"/>
-    <path fill="#213aa5" d="M631.9,432.52v-58.98h32.7c8.4,0,13.91,2.44,17.7,6.41,3.07,3.25,4.88,7.5,4.88,12.19,0,7.58-4.7,13.46-11.92,16.62l13.82,23.75h-14.81l-11.92-21.68h-17.52v21.68h-12.91ZM644.82,384.47v15.45h21.13c4.51,0,8.22-3.25,8.22-7.77,0-1.99-.72-3.79-2.08-5.15-2.08-2.26-4.7-2.53-7.05-2.53h-20.23Z"/>
-    <polygon fill="#213aa5" points="738.88 399.19 765.88 373.54 782.14 373.54 757.58 396.57 786.57 432.52 770.22 432.52 748.36 405.06 738.88 414 738.88 432.52 725.87 432.52 725.87 373.54 738.88 373.54 738.88 399.19"/>
-    <path fill="#213aa5" d="M860.85,388.72c-3.52-2.62-10.93-6.33-20.68-6.33-5.87,0-11.11,2.17-11.11,7.23s7.77,5.6,15.45,6.23c10.75.72,27.55,1.99,27.55,18.24,0,14.54-12.1,20.23-26.55,20.23-15.27,0-25.56-6.05-32.42-11.65l7.31-8.85c4.97,3.97,13.37,9.93,25.29,9.93,7.5,0,13.46-2.89,13.46-8.4s-6.05-6.95-14.9-7.68c-12.91-.81-28.09-2.26-28.09-17.25s13.28-18.7,24.39-18.7c12.28,0,22.67,4.52,27.73,7.95l-7.41,9.03Z"/>
-    <polygon fill="#213aa5" points="541.29 347.03 541.29 173.48 680.82 173.48 680.82 200.06 571.05 200.06 571.05 243.11 637.76 243.11 637.76 269.69 571.05 269.69 571.05 347.03 541.29 347.03"/>
-    <rect fill="#213aa5" x="696.88" y="160.99" width="27.37" height="186.04"/>
-    <path fill="#213aa5" d="M815.89,214.41c40.93,0,68.57,30.3,68.57,68.04s-27.64,68.57-68.57,68.57-68.04-30.03-68.04-68.57,27.37-68.04,68.04-68.04M815.89,328.16c25.51,0,40.4-21,40.4-45.71s-14.88-45.18-40.4-45.18-39.6,21.26-39.6,45.18,14.62,45.71,39.6,45.71M850.71,193.68h-69.37v-21.26h69.37v21.26Z"/>
-    <path fill="#213aa5" d="M264.84,341.16c-10.91,4.72-22.95,7.34-35.6,7.34-49.55,0-89.71-40.16-89.71-89.71,0-12.65,2.62-24.68,7.34-35.6l75.86,75.86,25.25,25.25,16.86,16.86Z"/>
-    <path fill="#213aa5" d="M291.7,194.39l146.99,146.99c-10.77,4.58-22.63,7.12-35.07,7.12-23.7,0-45.25-9.19-61.28-24.2-.38-.35-.75-.71-1.13-1.07l-147.03-147.03c10.77-4.58,22.63-7.12,35.07-7.12h.09c.16,0,.33,0,.49,0,20.9.13,40.11,7.41,55.29,19.52,2.29,1.82,4.48,3.75,6.58,5.79"/>
-    <path fill="#213aa5" d="M493.32,258.79c0,12.65-2.62,24.68-7.34,35.6l-117.97-117.96c10.91-4.72,22.95-7.34,35.6-7.34,49.55,0,89.71,40.16,89.71,89.71"/>
+  <svg class="footer-logo" height="60" viewBox="0 0 1024 606" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="#fff" points="206.23 373.54 206.23 432.52 195.03 432.52 165.04 396.03 164.95 396.03 164.95 432.52 151.95 432.52 151.95 373.54 163.06 373.54 193.13 410.12 193.22 410.12 193.22 373.54 206.23 373.54"/>
+    <polygon fill="#fff" points="283.04 407.32 261.27 407.32 261.27 421.41 299.56 421.41 299.56 432.52 248.35 432.52 248.35 373.54 297.49 373.54 297.49 384.74 261.27 384.74 261.27 396.21 283.04 396.21 283.04 407.32"/>
+    <polygon fill="#fff" points="329.14 373.54 384.78 373.54 384.78 384.74 363.46 384.74 363.46 432.52 350.55 432.52 350.55 384.74 329.14 384.74 329.14 373.54"/>
+    <polygon fill="#fff" points="427.36 373.54 438.65 412.29 439.19 412.29 451.29 373.54 460.78 373.54 472.79 412.29 473.33 412.29 484.71 373.54 498.26 373.54 479.38 432.52 467.1 432.52 455.99 397.48 455.45 397.48 444.43 432.52 432.15 432.52 413.27 373.54 427.36 373.54"/>
+    <path fill="#fff" d="M561.24,371.73c18.69,0,33.69,14,33.69,31.16s-14.99,31.43-33.69,31.43-33.33-13.91-33.33-31.43,14.63-31.16,33.33-31.16M561.24,423.22c11.29,0,20.14-9.21,20.14-20.32s-8.85-19.96-20.14-19.96-19.78,9.03-19.78,19.96,8.67,20.32,19.78,20.32"/>
+    <path fill="#fff" d="M631.9,432.52v-58.98h32.7c8.4,0,13.91,2.44,17.7,6.41,3.07,3.25,4.88,7.5,4.88,12.19,0,7.58-4.7,13.46-11.92,16.62l13.82,23.75h-14.81l-11.92-21.68h-17.52v21.68h-12.91ZM644.82,384.47v15.45h21.13c4.51,0,8.22-3.25,8.22-7.77,0-1.99-.72-3.79-2.08-5.15-2.08-2.26-4.7-2.53-7.05-2.53h-20.23Z"/>
+    <polygon fill="#fff" points="738.88 399.19 765.88 373.54 782.14 373.54 757.58 396.57 786.57 432.52 770.22 432.52 748.36 405.06 738.88 414 738.88 432.52 725.87 432.52 725.87 373.54 738.88 373.54 738.88 399.19"/>
+    <path fill="#fff" d="M860.85,388.72c-3.52-2.62-10.93-6.33-20.68-6.33-5.87,0-11.11,2.17-11.11,7.23s7.77,5.6,15.45,6.23c10.75.72,27.55,1.99,27.55,18.24,0,14.54-12.1,20.23-26.55,20.23-15.27,0-25.56-6.05-32.42-11.65l7.31-8.85c4.97,3.97,13.37,9.93,25.29,9.93,7.5,0,13.46-2.89,13.46-8.4s-6.05-6.95-14.9-7.68c-12.91-.81-28.09-2.26-28.09-17.25s13.28-18.7,24.39-18.7c12.28,0,22.67,4.52,27.73,7.95l-7.41,9.03Z"/>
+    <polygon fill="#fff" points="541.29 347.03 541.29 173.48 680.82 173.48 680.82 200.06 571.05 200.06 571.05 243.11 637.76 243.11 637.76 269.69 571.05 269.69 571.05 347.03 541.29 347.03"/>
+    <rect fill="#fff" x="696.88" y="160.99" width="27.37" height="186.04"/>
+    <path fill="#fff" d="M815.89,214.41c40.93,0,68.57,30.3,68.57,68.04s-27.64,68.57-68.57,68.57-68.04-30.03-68.04-68.57,27.37-68.04,68.04-68.04M815.89,328.16c25.51,0,40.4-21,40.4-45.71s-14.88-45.18-40.4-45.18-39.6,21.26-39.6,45.18,14.62,45.71,39.6,45.71M850.71,193.68h-69.37v-21.26h69.37v21.26Z"/>
+    <path fill="#fff" d="M264.84,341.16c-10.91,4.72-22.95,7.34-35.6,7.34-49.55,0-89.71-40.16-89.71-89.71,0-12.65,2.62-24.68,7.34-35.6l75.86,75.86,25.25,25.25,16.86,16.86Z"/>
+    <path fill="#fff" d="M291.7,194.39l146.99,146.99c-10.77,4.58-22.63,7.12-35.07,7.12-23.7,0-45.25-9.19-61.28-24.2-.38-.35-.75-.71-1.13-1.07l-147.03-147.03c10.77-4.58,22.63-7.12,35.07-7.12h.09c.16,0,.33,0,.49,0,20.9.13,40.11,7.41,55.29,19.52,2.29,1.82,4.48,3.75,6.58,5.79"/>
+    <path fill="#fff" d="M493.32,258.79c0,12.65-2.62,24.68-7.34,35.6l-117.97-117.96c10.91-4.72,22.95-7.34,35.6-7.34,49.55,0,89.71,40.16,89.71,89.71"/>
   </svg>
   <div style="display:flex;align-items:center;gap:8px">
     <span class="footer-text">Portal interno</span>
@@ -560,10 +558,143 @@ body {
 </footer>
 
 <script>
-  const live = document.querySelectorAll('.badge.live').length;
-  const wip  = document.querySelectorAll('.badge.wip').length;
-  document.getElementById('count-live').textContent = live;
-  document.getElementById('count-wip').textContent  = wip;
+// ── FIBER OPTIC BACKGROUND ──────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  let width, height, cables = [];
+  let animId;
+
+  function getBezierPoint(t, p0, p1, p2, p3) {
+    const cX = 3*(p1.x-p0.x), bX = 3*(p2.x-p1.x)-cX, aX = p3.x-p0.x-cX-bX;
+    const cY = 3*(p1.y-p0.y), bY = 3*(p2.y-p1.y)-cY, aY = p3.y-p0.y-cY-bY;
+    return {
+      x: aX*t**3 + bX*t**2 + cX*t + p0.x,
+      y: aY*t**3 + bY*t**2 + cY*t + p0.y
+    };
+  }
+
+  function computeCurve(p0, p1, p2, p3, segments = 500) {
+    const pts = [];
+    for (let i = 0; i <= segments; i++) pts.push(getBezierPoint(i/segments, p0, p1, p2, p3));
+    return pts;
+  }
+
+  function makePulses(count, isFg) {
+    return Array.from({ length: count }, () => ({
+      t:      Math.random(),
+      speed:  (Math.random()*0.003+0.001) * (isFg ? 1.5 : 0.8),
+      length: Math.floor(Math.random()*40)+10,
+      color:  Math.random()>0.5 ? '#00ffff' : '#0088ff',
+      size:   isFg ? Math.random()*4+2 : Math.random()*2+1,
+      glow:   isFg ? Math.random()*20+20 : Math.random()*10+10,
+    }));
+  }
+
+  function initCables() {
+    cables = [
+      {
+        points: computeCurve(
+          {x: width*-0.1, y: height*0.2}, {x: width*0.3, y: height*0.1},
+          {x: width*0.6,  y: height*0.9}, {x: width*1.1, y: height*0.8}),
+        thickness: 20, baseColor: '#05060A', coreColor: 'rgba(0,150,255,0.05)',
+        pulses: makePulses(15, false), zIndex: 0
+      },
+      {
+        points: computeCurve(
+          {x: width*-0.2, y: height*0.9}, {x: width*0.4, y: height*1.1},
+          {x: width*0.5,  y: height*0.2}, {x: width*1.2, y: height*-0.2}),
+        thickness: 25, baseColor: '#080B14', coreColor: 'rgba(0,200,255,0.08)',
+        pulses: makePulses(35, true), zIndex: 2
+      }
+    ];
+  }
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width  = width  * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width  = width  + 'px';
+    canvas.style.height = height + 'px';
+    ctx.scale(dpr, dpr);
+    initCables();
+  }
+
+  function drawBase(cable) {
+    const pts = cable.points;
+    if (pts.length < 2) return;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    const draw = (lw, color) => {
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i=1; i<pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+    };
+    draw(cable.thickness+20, '#020204');
+    draw(cable.thickness,     cable.baseColor);
+    draw(cable.thickness*0.8, '#0B101E');
+    draw(cable.thickness*0.5, '#030408');
+    draw(cable.thickness*0.3, cable.coreColor);
+  }
+
+  function drawPulses(cable) {
+    const pts = cable.points;
+    const total = pts.length;
+    ctx.globalCompositeOperation = 'screen';
+    for (const p of cable.pulses) {
+      p.t += p.speed;
+      if (p.t > 1 + p.length/total) p.t = -(p.length/total);
+      const cur   = Math.floor(p.t * total);
+      const start = Math.max(0, cur - p.length);
+      const end   = Math.min(total-1, cur);
+      if (start >= end) continue;
+
+      ctx.beginPath();
+      ctx.moveTo(pts[start].x, pts[start].y);
+      for (let i=start+1; i<=end; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = p.size;
+      ctx.strokeStyle = p.color;
+      ctx.shadowBlur  = p.glow;
+      ctx.shadowColor = p.color;
+      ctx.stroke();
+
+      ctx.lineWidth = p.size * 0.4;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function render() {
+    ctx.fillStyle = '#808080';
+    ctx.fillRect(0, 0, width, height);
+
+    const grad = ctx.createRadialGradient(width*.5, height*.5, 0, width*.5, height*.5, width*.8);
+    grad.addColorStop(0, '#060A18');
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
+
+    cables.sort((a,b) => a.zIndex - b.zIndex).forEach(c => { drawBase(c); drawPulses(c); });
+    animId = requestAnimationFrame(render);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  render();
+})();
+
+// ── BADGE COUNTERS ──────────────────────────────────────────────────
+document.getElementById('count-live').textContent = document.querySelectorAll('.badge.live').length;
+document.getElementById('count-wip').textContent  = document.querySelectorAll('.badge.wip').length;
 </script>
 </body>
 </html>
